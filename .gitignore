@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.vite/
+qa/
+*.log
+게임_시작.html

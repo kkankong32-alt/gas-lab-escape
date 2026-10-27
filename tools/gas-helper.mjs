@@ -1,0 +1,1 @@
+export async function finishGas(page,gas,touch=false){const press=async id=>touch?page.locator(id).tap():page.locator(id).click();if(gas==='N2'){await press('#pack-seal');await page.waitForTimeout(1600);}await press('#gas-compare');await page.waitForTimeout(1200);await page.locator('#gas-observed:not([disabled])').waitFor({timeout:15000});await press('#gas-observed');}

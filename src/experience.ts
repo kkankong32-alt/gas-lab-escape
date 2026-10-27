@@ -1,0 +1,8 @@
+import {type State,type Gas,gasOxygen} from './science.ts';
+export const gasKeys:Gas[]=['He','CO2','N2','O2'];
+export type Experience={version:1;sealed:boolean;sealedOxygen:number|null;compared:Record<Gas,boolean>;readyAt:Record<Gas,number|null>;minSyringe:number};
+export function experience(s:State):Experience{const saved=(s as State&{experience?:Experience}).experience;if(saved?.version===1)return saved;const old=(s as State&{exploration?:{observed?:Partial<Record<Gas,boolean>>}}).exploration?.observed;return {version:1,sealed:!!old?.N2,sealedOxygen:null,compared:{He:!!old?.He,CO2:!!old?.CO2,N2:!!old?.N2,O2:!!old?.O2},readyAt:{He:null,CO2:null,N2:null,O2:null},minSyringe:s.press.v};}
+export function trackExperience(s:State,e:Experience){e.minSyringe=Math.min(e.minSyringe,s.press.v);for(const g of gasKeys)if(s.gases.done[g]&&e.readyAt[g]===null)e.readyAt[g]=s.elapsed;}
+export function sealPackage(s:State,e:Experience){if(!s.gases.done.N2||s.gases.docked!=='N2'||s.gases.target!=='N2')return false;e.sealed=true;e.sealedOxygen=gasOxygen(s,'N2')*100;s.gases.valve=0;return true;}
+export function canObserve(s:State,e:Experience,g:Gas){return s.gases.done[g]&&e.compared[g]&&(g!=='N2'||e.sealed)&&(g!=='O2'||e.readyAt.O2!==null&&s.elapsed-e.readyAt.O2>=5);}
+export function gasStage(s:State,e:Experience,observed:Record<Gas,boolean>){const g=s.gases.docked;if(!g||observed[g])return 'choose';if(s.gases.target!==g)return 'connect';if(!s.gases.done[g])return s.gases.valve>0||g==='He'&&s.gases.amount.He>=1?'observe':'supply';if(g==='N2'&&!e.sealed)return 'seal';if(g==='O2'&&(e.readyAt.O2===null||s.elapsed-e.readyAt.O2<5))return 'wait';return e.compared[g]?'confirm':'compare';}
