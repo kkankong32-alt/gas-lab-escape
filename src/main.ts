@@ -31,7 +31,7 @@ ui.innerHTML=`
  <div class="creator-credit" aria-label="제작자 안내">기획·제작: <strong>쓰로인훈쌤 김종훈</strong><small>딸깍 바이브 교실 · 초등 수업을 위한 무료 교육 콘텐츠</small></div>
  <div class="menu-actions" id="menu-actions"><button id="start" class="primary" disabled>시작하기 <span>↗</span></button><button id="continue" disabled>이어하기 <span>→</span></button><button id="controls">조작 방법 <span>＋</span></button><button id="settings">설정 <span>＋</span></button></div>
  <div class="start-help"><b>처음이라도 괜찮아요</b><span>↑ ↓ ← → 이동 · 마우스로 둘러보기</span><span>가까이 가서 E · 실험 중에는 클릭 / 드래그</span><span>시작하면 마우스가 게임 안에 머물러요. Esc로 나올 수 있어요.</span></div><div class="loading" id="loading"><span id="load-text">연구소 연결 중</span><div class="loading-bar"><i id="load-bar"></i></div></div>
- <div class="menu-footer"><span><i class="status-dot"></i>초등 과학 · 여러 가지 기체</span><span id="build-version">2026.10.28-r4-fc5.1 · 제작자·이용 통계 반영</span></div>
+ <div class="menu-footer"><span><i class="status-dot"></i>초등 과학 · 여러 가지 기체</span><span id="build-version">2026.10.29-r4-fc5.2 · 안내 겹침 수정</span></div>
 </section>
 <section id="hud" class="hud hidden">
  <div class="hud-top"><div class="hud-brand" id="hud-brand">풀어서 잠금 해제<small>기체 연구소 · 안전 회로 복구</small></div><div class="circuits" id="circuits"></div></div>
@@ -41,6 +41,16 @@ ui.innerHTML=`
  <button id="look-start" class="look-start hidden">화면을 클릭해 둘러보기 시작 <small>마우스로 시점 이동 · Esc로 풀기</small></button><div id="carry" class="carry hidden"></div><div id="particle-note" class="particle-note hidden">기체 입자는 실제 모습이 아닌 설명용 모식도입니다</div>
  <div class="hud-bottom"><div id="keys" class="keys"></div><div class="toolbar"><button id="hint">H · 힌트</button><button id="tools">M · 도구</button><button id="back" class="hidden">실험 화면 닫기</button><button id="pause">Esc · 쉬기</button></div></div>
 </section><div id="toast" class="toast hidden"></div><div id="modal" class="modal-backdrop hidden"></div><div id="ending" class="ending hidden"></div><div id="cinematic" class="cinematic hidden"><p>기체가 움직이고, 잠금이 풀립니다.</p></div>`;
+// Keep notices inside the actual scene, clear of responsive control panels.
+function layoutNotices(){
+ const r=canvas.getBoundingClientRect();
+ document.body.style.setProperty('--notice-x',(r.left+r.width/2)+'px');
+ document.body.style.setProperty('--notice-bottom',Math.max(72,innerHeight-r.bottom+10)+'px');
+ document.body.style.setProperty('--notice-width',Math.max(120,Math.min(560,r.width-24))+'px');
+}
+new ResizeObserver(layoutNotices).observe(canvas);
+window.addEventListener('resize',layoutNotices);
+layoutNotices();
 let state:State=fresh(),mode:'menu'|'walk'|'focus'|'cinematic'|'end'='menu',focus:number|null=null,paused=false,ready=false,carry:string|null=null;
 let learning:Learning=freshLearning(),review:Review|null=null,reviewPending=0,heatObserve=false,autoHeat=false;
 let discoveries=exploration(state,true),followAlong=false,lastActionAt=performance.now(),hintLevel=0,lastFollowTarget='';
@@ -502,4 +512,5 @@ if(import.meta.env.DEV){
 }
 
 if('serviceWorker' in navigator&&location.protocol!=='file:'&&!import.meta.env.DEV)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>toast('오프라인 준비를 완료하지 못했어요. 인터넷 연결 상태에서는 계속할 수 있어요.')));
+
 

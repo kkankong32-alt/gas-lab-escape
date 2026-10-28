@@ -49,3 +49,8 @@ body.lock-inspection #final-console{left:16px;right:16px;top:auto;bottom:62px;wi
 @media(max-height:760px){.menu .tagline{margin-bottom:8px}.creator-credit{margin-bottom:8px}}
 @media(max-height:500px) and (orientation:landscape){.creator-credit{max-width:48%;font-size:14px;margin:4px 0 8px}.creator-credit small{font-size:12px}}
 @media(min-width:701px) and (min-height:501px) and (max-height:800px){.menu{justify-content:flex-start;padding-top:62px;padding-bottom:48px;overflow-y:auto}.menu h1{font-size:48px;margin:8px 0}.menu .subtitle{font-size:22px;margin-bottom:8px}.menu .tagline{line-height:1.4;font-size:16px;margin-bottom:8px}.menu-actions button{min-height:44px;padding:8px 14px}.menu .start-help{margin-top:10px;padding-top:8px;font-size:14px;line-height:1.4}.menu-footer{font-size:12px}}
+/* One bounded, non-interactive notice area in the scene, never over the controls.
+   Explicit resets replace the legacy left/right stretching in all lab layouts. */
+body.experiment #toast,body.experiment #interact{position:fixed!important;left:var(--notice-x,50%)!important;right:auto!important;top:auto!important;bottom:var(--notice-bottom,200px)!important;transform:translateX(-50%)!important;width:max-content!important;max-width:var(--notice-width,560px)!important;min-width:0!important;min-height:0!important;text-align:center!important;white-space:normal!important;overflow-wrap:anywhere;word-break:normal;pointer-events:none!important;z-index:20;font-size:16px;line-height:1.4}
+body.experiment:has(#toast:not(.hidden)) #interact{display:none!important}
+.gas-selected>div,.gas-feedback>span{min-width:0;overflow-wrap:anywhere}.gas-selected button{max-width:48%;white-space:normal}.gas-tabs button{min-width:0;overflow-wrap:anywhere}
