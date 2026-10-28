@@ -28,9 +28,10 @@ ui.innerHTML=`
  <div class="eyebrow accent">관찰하고, 움직이고, 탈출하라</div>
  <h1>풀어서<br>잠금 해제</h1><p class="subtitle">기체 연구소 탈출</p>
  <p class="tagline">보이지 않는 기체가, 유일한 열쇠.<br>첫 번째 임무: 공기의 무게를 확인하세요.</p>
+ <div class="creator-credit" aria-label="제작자 안내">기획·제작: <strong>쓰로인훈쌤 김종훈</strong><small>딸깍 바이브 교실 · 초등 수업을 위한 무료 교육 콘텐츠</small></div>
  <div class="menu-actions" id="menu-actions"><button id="start" class="primary" disabled>시작하기 <span>↗</span></button><button id="continue" disabled>이어하기 <span>→</span></button><button id="controls">조작 방법 <span>＋</span></button><button id="settings">설정 <span>＋</span></button></div>
  <div class="start-help"><b>처음이라도 괜찮아요</b><span>↑ ↓ ← → 이동 · 마우스로 둘러보기</span><span>가까이 가서 E · 실험 중에는 클릭 / 드래그</span><span>시작하면 마우스가 게임 안에 머물러요. Esc로 나올 수 있어요.</span></div><div class="loading" id="loading"><span id="load-text">연구소 연결 중</span><div class="loading-bar"><i id="load-bar"></i></div></div>
- <div class="menu-footer"><span><i class="status-dot"></i>초등 과학 · 여러 가지 기체</span><span id="build-version">2026.10.27-r4-fc5 · 마개·이음새·가독성 수정</span></div>
+ <div class="menu-footer"><span><i class="status-dot"></i>초등 과학 · 여러 가지 기체</span><span id="build-version">2026.10.28-r4-fc5.1 · 제작자·이용 통계 반영</span></div>
 </section>
 <section id="hud" class="hud hidden">
  <div class="hud-top"><div class="hud-brand" id="hud-brand">풀어서 잠금 해제<small>기체 연구소 · 안전 회로 복구</small></div><div class="circuits" id="circuits"></div></div>
